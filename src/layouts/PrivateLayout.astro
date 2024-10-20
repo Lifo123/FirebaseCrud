@@ -1,0 +1,23 @@
+---
+import Layout from "./Layout.astro";
+import Header from "@Components/Header.astro";
+
+interface Props {
+    title: string;
+    description: string;
+}
+
+const { title, description } = Astro?.props;
+---
+
+<script is:inline>
+    let user = JSON.parse(localStorage.getItem("F-User"));
+    if (!user) {
+        window.location.href = "/FirebaseCrud/Login";
+    }
+</script>
+
+<Layout title={title} description={description}>
+    <Header/>
+    <slot />
+</Layout>

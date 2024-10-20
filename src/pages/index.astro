@@ -1,0 +1,18 @@
+---
+import Count from "@Apps/Count.tsx";
+import PrivateLayout from "@Layouts/PrivateLayout.astro";
+
+---
+
+<PrivateLayout title="Template" description="Template">
+	<main class="f-col f-justify-center text-center">
+		<h1 class="mt-6 fw-500">Template Astro Lifo</h1>
+		<div class="f-row g-3 mx-auto">
+			<Count client:visible />
+			<Count client:visible />
+			<Count client:visible />
+		</div>
+	</main>
+</PrivateLayout>
+
+<style></style>

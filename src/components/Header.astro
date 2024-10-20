@@ -1,0 +1,36 @@
+---
+import DarkModeBTN from "./Buttons/DarkModeBTN";
+import User from "./User";
+
+
+---
+
+<header class="header relative f-row f-justify-between f-align-center mx-auto w-80 px-4">
+    <h2 class="fs-5 fw-700"><a href="/FirebaseCrud/">LIFO</a></h2>
+    <ul class="h-menu f-row g-2">
+
+    </ul>
+    <div class="f-row g-2 f-center">
+        <DarkModeBTN client:only="react" />
+        <User client:only="react" />
+    </div>
+</header>
+
+<style is:inline>
+    h2{
+        color: #000;
+    }
+    a{
+        color: #000;
+    }
+    .header{
+        height: 66px;
+        border-bottom: solid 1px #e5e5e5;
+    }
+
+    @media (500px > width) {
+        .header{
+            width: 100% !important;
+        }
+    }
+</style>
