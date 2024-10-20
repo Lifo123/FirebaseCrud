@@ -1,1 +1,0 @@
-import{j as r}from"./jsx-runtime.CdUEbdov.js";import{r as s}from"./index.YZ_XhM9s.js";function u(){const[t,o]=s.useState(0);return r.jsxs("div",{className:"count pointer fs-2 w-max br-6 mt-4",onClick:()=>o(t+1),children:["Count ",t]})}export{u as default};
