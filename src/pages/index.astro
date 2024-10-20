@@ -1,12 +1,12 @@
 ---
 import '@Apps/App.css';
-import Count from "@Apps/Count.tsx";
+import CRUD from "@Apps/CRUD.astro";
 import PrivateLayout from "@Layouts/PrivateLayout.astro";
 
 ---
 
 <PrivateLayout title="Template" description="Template">
 	<main class="f-col f-justify-center text-center">
-		<Count client:only="react" />
+		<CRUD />
 	</main>
 </PrivateLayout>

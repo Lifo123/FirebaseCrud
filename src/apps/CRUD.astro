@@ -1,0 +1,14 @@
+---
+import AddBTN from "./components/AddBTN";
+import CRUDts from "./CRUD";
+
+---
+
+<div class="form-add f-col g-2 mx-auto mt-4 f-align-end">
+    <h4 class="text-left fs-3">Add Product</h4>
+    <input type="text" name="name" placeholder="Name" class="f-col g-1 w-100" autocomplete="off"/>
+    <input type="text" name="price" placeholder="Price" class="f-col g-1 w-100" autocomplete="off"/>
+    <input type="text" name="stock" placeholder="Stock" class="f-col g-1 w-100" autocomplete="off"/>
+    <AddBTN client:only="react" />
+</div>
+<CRUDts client:only="react" />

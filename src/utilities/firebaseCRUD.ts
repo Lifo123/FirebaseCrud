@@ -1,17 +1,6 @@
-import { ref, get, set } from "firebase/database";
+import { ref, get, set, query, limitToLast } from "firebase/database";
 import { db } from "@Services/firebase";
 import { hashPass } from "./Hashing";
-
-export const getUser = async (userId: string) => {
-    const userRef = ref(db, `users/${userId}`);
-    const userSnapshot = await get(userRef);
-
-    if (userSnapshot.exists()) {
-        return userSnapshot.val();
-    } else {
-        return null;
-    }
-}
 
 export const validateUser = async (userId: string, password: string): Promise<Boolean | Object | String> => {
     const userRef = ref(db, `users/${userId}`);
@@ -56,6 +45,8 @@ export const createUser = async (userId: string, password: string, salt: string)
         return 'created';
 
     } catch (e) {
+        console.log(e);
+        
         return 'error';
     }
 }

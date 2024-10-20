@@ -1,6 +1,23 @@
+.form-add{
+    width: 60%;
+    min-width: 320px;
+}
+.form-add h4{
+    align-self: flex-start;
+    font-family: Roboto;
+}
+.form-add input{
+    outline: none;  
+    border: solid 1px var(--f-placeholder);
+    border-radius: 4px;
+    padding: 13px 17px;
+    font-size: 15px;
+}
+
+
 .excel-table {
     height: max-content;
-    width: 540px;
+    width: 60%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
 }
@@ -10,7 +27,7 @@
     border: 1px solid #d4d4d4;
     padding: 8px;
     text-align: left;
-    min-width: 100px;
+    min-width: 40px;
     height: 40px;
 }
 
