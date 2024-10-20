@@ -26,6 +26,9 @@ export default function AddBTN() {
                 stock: Number(Data[2].value),
                 createAt: new Date().getTime()
             });
+            Data.forEach(input => {
+                input.value = ''
+            })
 
             if (productsSnapshot.exists()) {
                 toast.dismiss();

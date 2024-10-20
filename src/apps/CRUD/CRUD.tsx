@@ -60,8 +60,6 @@ export default function CRUDts() {
                         <th>Name</th>
                         <th>Price</th>
                         <th>Stock</th>
-                        <th>Edit</th>
-                        <th>Save</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -73,8 +71,6 @@ export default function CRUDts() {
                                     <td>{product?.name}</td>
                                     <td>{product?.price}</td>
                                     <td>{product?.stock}</td>
-                                    <td className="td-edit pointer">Edit</td>
-                                    <td className="td-save pointer">Save</td>
                                     <td className="td-delete pointer" onClick={() => handleDelete(product?.name)}>Delete</td>
                                 </tr>
                             )
