@@ -9,7 +9,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview --host",
     "astro": "astro",
-    "deploy": "gh-pages -d Build",
+    "deploy": "gh-pages -d Build --dotfiles",
     "predeploy": "npm run build"
   },
   "dependencies": {

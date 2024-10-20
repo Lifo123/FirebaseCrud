@@ -1,0 +1,38 @@
+.excel-table {
+    height: max-content;
+    width: 540px;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.excel-table th,
+.excel-table td {
+    border: 1px solid #d4d4d4;
+    padding: 8px;
+    text-align: left;
+    min-width: 100px;
+    height: 40px;
+}
+
+.excel-table td {
+    background-color: #fff;
+}
+
+.excel-table tr:nth-child(even) td {
+    background-color: #ececec;
+}
+/* Table headers with a fixed top row effect */
+.excel-table th {
+    position: sticky;
+    top: 0;
+    background-color: #ececec;
+}
+
+/* Add slight box-shadow effect like Excel */
+.excel-table {
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table-pass{
+    max-width: 450px;
+}

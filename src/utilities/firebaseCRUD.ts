@@ -39,14 +39,17 @@ export const createUser = async (userId: string, password: string, salt: string)
     try {
         const userRef = ref(db, `users/${userId}`);
         const userSnapshot = await get(userRef);
+        const currentTime = new Date().getTime();
 
         if (userSnapshot.exists()) {
             return 'exists';
         }
 
         const userData = {
+            user: userId,
             password: password,
             salt: salt,
+            createAt: currentTime,
         };
         await set(userRef, userData);
 
