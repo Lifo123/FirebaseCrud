@@ -5,7 +5,6 @@ import { ShufleGameStore } from "./context/ShufleGameStore";
 
 //Components
 import Loading from '@Components/Loading/Loading';
-import { toast } from 'sonner';
 
 
 export default function ShuffleGame() {
@@ -16,7 +15,7 @@ export default function ShuffleGame() {
     const GF = useShuffleGame();
 
     const handleGenerate = async () => {
-        GF.restartGame();
+        GF.getWord();
     };
 
 

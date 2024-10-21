@@ -5,12 +5,12 @@ import { useStore } from "@nanostores/react";
 import { initialState, ShufleGameStore } from "../context/ShufleGameStore";
 
 //Services
-import { getWordDB } from "../services/ShuffleServices";
+import { queryDB } from "../services/ShuffleServices";
 
 //Utils
 import { generateSalt } from "@Utilities/Hashing";
 import { control } from "../utilities/ShuffleControl";
-import { GameUtil, Local } from "../utilities/ShuffleUtilities";
+import { GameUtil, Local, Setting } from "../utilities/ShuffleUtilities";
 
 export function useShuffleGame() {
     //Store
@@ -19,7 +19,7 @@ export function useShuffleGame() {
     const getWord = async () => {
         try {
             const salt = generateSalt();
-            const wordGenerated = await getWordDB(GS.gameSettings.Language, GS.gameSettings.WordLength);
+            const wordGenerated = await queryDB.getWord(GS.gameSettings.Language, GS.gameSettings.Length);
             const shuffleData = GameUtil.shuffle(wordGenerated, salt)
             let updatedGame = Local.updateNodes('gameState/word,salt', {
                 value: [shuffleData.shuffle, salt],
@@ -37,6 +37,10 @@ export function useShuffleGame() {
     }
 
     const restartGame = () => {
+        getWord();
+    }
+
+    const restartSettings = () => {
         ShufleGameStore.set(initialState);
         Local.set('F-Shuffle', initialState);
     }
@@ -65,13 +69,14 @@ export function useShuffleGame() {
 
     }, [])
     useEffect(() => {
-        if (GS?.gameState?.word === '' && GS?.gameState?.salt === '') {
+        if (GS?.gameState?.word === '' || GS?.gameState?.salt === '') {
             getWord();
         }
     }, [GS?.gameState?.word, GS?.gameState?.salt]);
 
     return {
         getWord,
-        restartGame
+        restartGame,
+        restartSettings
     }
 }

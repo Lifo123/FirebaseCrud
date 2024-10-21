@@ -11,7 +11,6 @@ export default function AddBTN() {
         let Data = getInputs();
 
         if (Data[0].value === '' || Data[1].value === '' || Data[2].value === '') {
-            toast.dismiss();
             toast.error('Please fill all the fields');
             return;
         }
@@ -19,7 +18,7 @@ export default function AddBTN() {
         try {
             const productsRef = ref(db, `products/${Data[0].value.replace('.', ',')}`);
             const productsSnapshot = await get(productsRef)
-        
+
             await set(productsRef, {
                 name: Data[0].value,
                 price: Number(Data[1].value),
@@ -31,21 +30,17 @@ export default function AddBTN() {
             })
 
             if (productsSnapshot.exists()) {
-                toast.dismiss();
-                toast.success('Product Updated',{
+                toast.success('Product Updated', {
                     duration: 1000
                 });
                 return;
             }
+            toast.success('Product added successfully');
+
         } catch (e) {
-            toast.dismiss();
             toast.error('Error adding product');
             return;
         }
-
-        toast.dismiss();
-        toast.success('Product added successfully');
-
     }
 
     const getInputs = () => {

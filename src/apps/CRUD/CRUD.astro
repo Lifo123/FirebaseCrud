@@ -12,4 +12,13 @@ import CRUDts from "./CRUD";
     <input type="text" name="stock" placeholder="Stock" class="f-col g-1 w-100" autocomplete="off"/>
     <AddBTN client:only="react" />
 </div>
-<CRUDts client:only="react" />
+<section class="crud-cont f-col g-2 mx-auto mt-4">
+    <CRUDts client:only="react" />
+</section>
+
+<style is:inline>
+    .crud-cont{
+        width: 60%;
+        min-width: 350px;
+    }
+</style>

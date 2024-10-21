@@ -1,4 +1,5 @@
 import { Local } from "@Utilities/Local";
+import { Setting } from "./ShuffleSettings";
 
 const shuffle = (word: string, salt: string) => {
     const a = word.length + salt.length;
@@ -32,4 +33,4 @@ export const GameUtil = {
     generateRandom
 }
 
-export { Local }
+export { Local, Setting }

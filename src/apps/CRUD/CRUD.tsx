@@ -1,3 +1,4 @@
+import Loading from "@Components/Loading/Loading";
 import { db } from "@Services/firebase";
 import { limitToLast, onValue, orderByChild, query, ref, remove } from "firebase/database";
 import { useEffect, useState } from "react"
@@ -19,10 +20,8 @@ export default function CRUDts() {
         try {
             const productsRef = ref(db, `products/${id.replace('.', ',')}`);
             await remove(productsRef);
-            toast.dismiss();
             toast.success('Product deleted successfully');
         } catch (e) {
-            toast.dismiss();
             toast.error('Error deleting product');
         }
     }
@@ -54,7 +53,7 @@ export default function CRUDts() {
 
     return (
         Products.length > 0 ? (
-            <table className="excel-table br-10 o-hidden mx-auto mt-4 sd-3">
+            <table className="excel-table br-10 o-hidden w-100 sd-3">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -78,6 +77,6 @@ export default function CRUDts() {
                     }
                 </tbody>
             </table>
-        ) : <p >Loading...</p>
+        ) : <Loading styleParent={{ scale: '0.45', marginBottom: 20 }} line={{ strokeWidth: 8 }} />
     )
 }
