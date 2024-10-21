@@ -17,7 +17,7 @@ export default function CRUDts() {
     //Functions
     const handleDelete = async (id: string) => {
         try {
-            const productsRef = ref(db, `products/${id}`);
+            const productsRef = ref(db, `products/${id.replace('.', ',')}`);
             await remove(productsRef);
             toast.dismiss();
             toast.success('Product deleted successfully');

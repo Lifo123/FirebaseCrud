@@ -1,8 +1,14 @@
 import { ref, get, set, query, limitToLast } from "firebase/database";
-import { db } from "@Services/firebase";
+import { analytics, db } from "@Services/firebase";
 import { hashPass } from "./Hashing";
+import { logEvent } from "firebase/analytics";
 
 export const validateUser = async (userId: string, password: string): Promise<Boolean | Object | String> => {
+    logEvent(analytics, 'login', {
+        method: 'username',
+        userId: userId
+    });
+
     const userRef = ref(db, `users/${userId}`);
     const userSnapshot = await get(userRef);
 

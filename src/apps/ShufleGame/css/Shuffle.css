@@ -1,0 +1,11 @@
+.game-container{
+    width: 60%;
+    min-width: 320px;
+}
+.box-in{
+    display: flex;
+    border: solid 1px var(--f-placeholder);
+    background-color: var(--f-bg-bento);
+    min-height: 60px;
+    aspect-ratio: 1/1;
+}

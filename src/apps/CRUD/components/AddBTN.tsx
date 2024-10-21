@@ -17,7 +17,7 @@ export default function AddBTN() {
         }
 
         try {
-            const productsRef = ref(db, `products/${Data[0].value}`);
+            const productsRef = ref(db, `products/${Data[0].value.replace('.', ',')}`);
             const productsSnapshot = await get(productsRef)
         
             await set(productsRef, {

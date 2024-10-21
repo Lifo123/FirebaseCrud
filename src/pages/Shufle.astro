@@ -1,0 +1,37 @@
+---
+import ShufeGame from "@Apps/ShufleGame/ShuffleGame";
+import DarkModeBTN from "@Components/Buttons/DarkModeBTN";
+import Layout from "@Layouts/Layout.astro";
+---
+    
+<Layout title="Template" description="Template">
+    <header class="header relative f-row f-justify-between f-align-center mx-auto">
+        <h2 class="fs-5 fw-700"><a href="/FirebaseCrud/">LIFO</a></h2>
+        <p class="m-0 fs-4 fw-700">Shufle Game</p>
+        <DarkModeBTN client:only="react" />
+    </header>
+    <ShufeGame client:only="react" />
+</Layout>
+
+<style is:inline>
+    h2 {
+        color: #000;
+    }
+    a {
+        color: #000;
+    }
+    p{
+        font-family: Roboto, Inter, sans-serif;
+    }
+    .header {
+        height: 66px;
+        border-bottom: solid 1px #e5e5e5;
+        padding-inline: 5rem;
+    }
+
+    @media (500px > width) {
+        .header {
+            width: 100% !important;
+        }
+    }
+</style>
