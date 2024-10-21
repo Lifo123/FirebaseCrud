@@ -1,10 +1,9 @@
 import { ShufleGameStore } from "../context/ShufleGameStore";
+import { GameUtil, Local } from "./ShuffleUtilities";
 
 const typing = (input: string) => {
     let data = ShufleGameStore.get()
-    let updateGameState = data?.gameState
 
-    console.log('Escribiendo', updateGameState);
 }
 const backspace = () => {
     console.log('Escribiendo');

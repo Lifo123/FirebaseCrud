@@ -2,9 +2,11 @@
 import ShufeGame from "@Apps/ShufleGame/ShuffleGame";
 import DarkModeBTN from "@Components/Buttons/DarkModeBTN";
 import Layout from "@Layouts/Layout.astro";
+import { Toaster } from "sonner";
 ---
     
 <Layout title="Template" description="Template">
+    <Toaster richColors position="top-center" client:only="react" />
     <header class="header relative f-row f-justify-between f-align-center mx-auto">
         <h2 class="fs-5 fw-700"><a href="/FirebaseCrud/">LIFO</a></h2>
         <p class="m-0 fs-4 fw-700">Shufle Game</p>

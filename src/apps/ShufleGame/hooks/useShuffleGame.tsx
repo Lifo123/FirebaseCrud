@@ -1,10 +1,16 @@
-import { GameUtil } from "../utilities/ShuffleUtilities";
-import { useStore } from "@nanostores/react";
-import { ShufleGameStore } from "../context/ShufleGameStore";
-import { getWordDB } from "../services/ShuffleServices";
-import { generateSalt } from "@Utilities/Hashing";
+//React
 import { useEffect } from "react";
+import { useStore } from "@nanostores/react";
+
+import { initialState, ShufleGameStore } from "../context/ShufleGameStore";
+
+//Services
+import { getWordDB } from "../services/ShuffleServices";
+
+//Utils
+import { generateSalt } from "@Utilities/Hashing";
 import { control } from "../utilities/ShuffleControl";
+import { GameUtil, Local } from "../utilities/ShuffleUtilities";
 
 export function useShuffleGame() {
     //Store
@@ -14,21 +20,25 @@ export function useShuffleGame() {
         try {
             const salt = generateSalt();
             const wordGenerated = await getWordDB(GS.gameSettings.Language, GS.gameSettings.WordLength);
-            const shuffleData = GameUtil.shuffle(wordGenerated, salt);
-            let updateGame = GS
-            updateGame = {
-                ...GS, gameState: {
-                    ...GS.gameState,
-                    word: shuffleData.shuffle,
-                    salt: salt
-                }
-            }
+            const shuffleData = GameUtil.shuffle(wordGenerated, salt)
+            let updatedGame = Local.updateNodes('gameState/word,salt', {
+                value: [shuffleData.shuffle, salt],
+                obj: GS
+            });
 
-            GameUtil.saveLocal('F-Shuffle', updateGame)
-            ShufleGameStore.set(updateGame);
+            await ShufleGameStore.set(updatedGame);
+            await Local.set('F-Shuffle', updatedGame);
+
+            return true;
         } catch (e) {
             console.log(e);
+            return false
         }
+    }
+
+    const restartGame = () => {
+        ShufleGameStore.set(initialState);
+        Local.set('F-Shuffle', initialState);
     }
 
     const handleKeyDown = (e: any) => {
@@ -45,9 +55,8 @@ export function useShuffleGame() {
         }
     }
 
+    //Effects
     useEffect(() => {
-        console.log('Add Envet');
-
         window?.addEventListener('keydown', handleKeyDown)
 
         return () => {
@@ -55,9 +64,14 @@ export function useShuffleGame() {
         }
 
     }, [])
-
+    useEffect(() => {
+        if (GS?.gameState?.word === '' && GS?.gameState?.salt === '') {
+            getWord();
+        }
+    }, [GS?.gameState?.word, GS?.gameState?.salt]);
 
     return {
-        getWord
+        getWord,
+        restartGame
     }
 }

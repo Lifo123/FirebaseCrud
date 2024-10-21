@@ -2,7 +2,7 @@ import { atom } from "nanostores";
 
 const isBrowser = typeof window !== 'undefined'
 
-const initialState = {
+export const initialState = {
     gameState: {
         word: '',
         salt: '',

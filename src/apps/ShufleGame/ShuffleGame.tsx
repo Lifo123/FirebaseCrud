@@ -1,9 +1,11 @@
 import './css/Shuffle.css'
 import { useStore } from "@nanostores/react";
-import { ShufleGameStore } from "./context/ShufleGameStore";
-import { useEffect, useState } from "react";
 import { useShuffleGame } from './hooks/useShuffleGame';
+import { ShufleGameStore } from "./context/ShufleGameStore";
+
+//Components
 import Loading from '@Components/Loading/Loading';
+import { toast } from 'sonner';
 
 
 export default function ShuffleGame() {
@@ -13,17 +15,15 @@ export default function ShuffleGame() {
     //Hook Game
     const GF = useShuffleGame();
 
+    const handleGenerate = async () => {
+        GF.restartGame();
+    };
 
-    useEffect(() => {
-        if (GS.gameState.word === '' && GS.gameState.salt === '') {
-            GF.getWord();
-        }
-    }, [GS.gameState.word, GS.gameState.salt]);
 
     return (
         <section className="game-container f-col g-2 mt-5 mx-auto">
             {
-                GS.gameState.word ? (
+                GS?.gameState?.word ? (
                     <>
                         <div className='game-header f-row g-2 mx-auto'>
                             {
@@ -35,16 +35,16 @@ export default function ShuffleGame() {
                         <div className='game-board f-col g-2 mx-auto mt-3'>
                             {
                                 GS.gameState.valid.map((row: any, index: number) => (
-                                    <Row key={index} data={row} id={index}/>
+                                    <Row key={index} data={row} id={index} />
                                 ))
                             }
                         </div>
                     </>
-                ) : <Loading styleParent={{scale: '0.45', marginBottom: 10}} line={{strokeWidth: 8}}/>
+                ) : <Loading styleParent={{ scale: '0.45', marginBottom: 10 }} line={{ strokeWidth: 8 }} />
             }
 
-            <span className='btn btn-blue br-6 w-max mt-5' onClick={() => { GF.getWord() }}>
-                Ver Word {GS.gameState.word || 'Loading...'}
+            <span className='btn btn-blue br-6 w-max mt-5' onClick={handleGenerate}>
+                Generate New
             </span>
         </section>
     )
