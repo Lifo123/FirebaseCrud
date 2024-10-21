@@ -8,11 +8,26 @@ const initialState = {
         salt: '',
         guess: '',
         valid: [
-            { char: '', isValid: null },
-            { char: '', isValid: null },
-            { char: '', isValid: null },
-            { char: '', isValid: null },
-            { char: '', isValid: null }
+            [
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null }
+            ], [
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null }
+            ], [
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null }
+            ]
+
         ],
         status: 'inProgress',
     },
@@ -20,7 +35,6 @@ const initialState = {
         WordLength: 5,
         Tries: 3,
         Language: 'ES',
-        DicLength: 926
     }
 
 }

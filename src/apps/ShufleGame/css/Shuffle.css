@@ -1,5 +1,9 @@
+*{
+    color: var(--f-text);
+}
+
 .game-container{
-    width: 60%;
+    width: 420px;
     min-width: 320px;
 }
 .box-in{
@@ -8,4 +12,5 @@
     background-color: var(--f-bg-bento);
     min-height: 60px;
     aspect-ratio: 1/1;
+    font-family: Miriam Libre;
 }

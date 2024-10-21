@@ -1,27 +1,43 @@
 import { ShufleGameStore } from "../context/ShufleGameStore";
 
-export const shuffle = (word: string, salt: string) => {
-    let array = word.split('');
-    let saltValue  = salt.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+const shuffle = (word: string, salt: string) => {
+    const a = word.length + salt.length;
 
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = (saltValue + i) % array.length;  
-        [array[i], array[j]] = [array[j], array[i]]; 
+    const saltValue = Array.from(salt).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+
+    let b = word.split('').sort((a: string, b: string) => a.localeCompare(b));
+
+    // Crear dos mitades a partir del array de caracteres
+    let c = b.slice(0, Math.floor(b.length / 2));
+    let d = b.slice(Math.floor(b.length / 2));
+
+    for (let i = 0; i < a; i++) {
+        const cIndex = i % c.length;
+        const dIndex = (i + saltValue) % d.length;
+
+        [c[cIndex], d[dIndex]] = [d[dIndex], c[cIndex]];
     }
 
-    return { word: word, shuffle: array.join('') };
+    const shuffledArray = [...c, ...d];
+
+    return { word: word, shuffle: shuffledArray.join('') };
 }
 
-export const GenerateRandom = (max: number) => {
+const generateRandom = (max: number) => {
     return Math.floor(Math.random() * ((max || 100) + 1));
 }
 
-export const saveLocal = (node: string, newValue: any) => {
+const saveLocal = (node: string, newValue: any) => {
     if (node.endsWith('/')) {
         node = node.slice(0, -1);
     }
 
     const currentNode = node.split('/');
+    if (currentNode.length === 1) {
+        localStorage.setItem(node, JSON.stringify(newValue));
+        return
+    }
+
     let Data = ShufleGameStore.get();
 
     let current = Data;
@@ -46,7 +62,7 @@ export const saveLocal = (node: string, newValue: any) => {
 
 }
 
-export const getLocal = (node: string) => {
+const getLocal = (node: string) => {
     if (node.endsWith('/')) {
         node = node.slice(0, -1);
     }
@@ -78,4 +94,16 @@ export const getLocal = (node: string) => {
     }
 
 
+}
+
+const updateNode = (node: string, newValue: any) => {
+
+}
+
+export const GameUtil = {
+    shuffle,
+    generateRandom,
+    saveLocal,
+    getLocal,
+    updateNode
 }

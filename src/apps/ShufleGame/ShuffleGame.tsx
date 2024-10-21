@@ -1,8 +1,9 @@
 import './css/Shuffle.css'
 import { useStore } from "@nanostores/react";
 import { ShufleGameStore } from "./context/ShufleGameStore";
-import { useEffect } from "react";
-import useShuffleGame from './hooks/useShuffleGame';
+import { useEffect, useState } from "react";
+import { useShuffleGame } from './hooks/useShuffleGame';
+import Loading from '@Components/Loading/Loading';
 
 
 export default function ShuffleGame() {
@@ -13,28 +14,56 @@ export default function ShuffleGame() {
     const GF = useShuffleGame();
 
 
-
-
     useEffect(() => {
         if (GS.gameState.word === '' && GS.gameState.salt === '') {
             GF.getWord();
         }
-    }, [])
+    }, [GS.gameState.word, GS.gameState.salt]);
 
     return (
         <section className="game-container f-col g-2 mt-5 mx-auto">
-            <div className='game-board f-row g-2 mx-auto'>
-                {
-                    GS?.gameState?.valid.map((char: any, index: number) => (
-                        <span className='box-in br-6' key={index} data-state={char.isValid}>{char.char}</span>
-                    ))
-                }
-            </div>
-
+            {
+                GS.gameState.word ? (
+                    <>
+                        <div className='game-header f-row g-2 mx-auto'>
+                            {
+                                GS.gameState.word.split('').map((char: string, index: number) => (
+                                    <span className='box-in br-6 f-center fs-6 fw-900' key={index}>{char}</span>
+                                ))
+                            }
+                        </div>
+                        <div className='game-board f-col g-2 mx-auto mt-3'>
+                            {
+                                GS.gameState.valid.map((row: any, index: number) => (
+                                    <Row key={index} data={row} id={index}/>
+                                ))
+                            }
+                        </div>
+                    </>
+                ) : <Loading styleParent={{scale: '0.45', marginBottom: 10}} line={{strokeWidth: 8}}/>
+            }
 
             <span className='btn btn-blue br-6 w-max mt-5' onClick={() => { GF.getWord() }}>
-                Ver Word
+                Ver Word {GS.gameState.word || 'Loading...'}
             </span>
         </section>
+    )
+}
+
+type RowProps = {
+    data: any;
+    id: number;
+};
+
+const Row = ({ data, id }: RowProps) => {
+
+    return (
+        <div className='game-row f-row g-2' data-row={id}>
+            {
+                data?.map((char: any, index: number) => (
+                    <span className='box-in br-6 f-center fs-6 fw-900' key={index} data-char={index}>{char.char}</span>
+                ))
+            }
+        </div>
     )
 }
