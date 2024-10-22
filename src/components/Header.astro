@@ -1,36 +1,43 @@
 ---
-import DarkModeBTN from "./Buttons/DarkModeBTN";
 import User from "./User";
 
+interface Props {
+    logo?: { href: string; txt: string };
+    centerCont?: string;
+}
 
+const { logo, centerCont } = Astro.props;
 ---
 
-<header class="header relative f-row f-justify-between f-align-center mx-auto">
-    <h2 class="fs-5 fw-700"><a href="/FirebaseCrud/">LIFO</a></h2>
-    <ul class="h-menu f-row g-2">
-
-    </ul>
-    <div class="f-row g-2 f-center">
-        <DarkModeBTN client:only="react" />
-        <User client:only="react" />
-    </div>
+<header
+    class="header relative f-row f-justify-between f-align-center mx-auto relative"
+>
+    <h2 class="fs-5 fw-700">
+        <a href={logo?.href || "/Games/"}>{logo?.txt || "LIFO"}</a>
+    </h2>
+    {centerCont ? <h3 class="fs-4 fw-700 absolute">{centerCont}</h3> : null}
+    <User client:only="react" />
 </header>
 
 <style is:inline>
-    h2{
+    h2 {
         color: #000;
     }
-    a{
+    h3 {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    a {
         color: #000;
     }
-    .header{
+    .header {
         height: 66px;
         border-bottom: solid 1px #e5e5e5;
-        padding-inline: 5rem;
+        padding-inline: 3rem;
     }
 
     @media (500px > width) {
-        .header{
+        .header {
             width: 100% !important;
         }
     }

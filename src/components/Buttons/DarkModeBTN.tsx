@@ -5,7 +5,7 @@ import { useStore } from '@nanostores/react';
 import { DarkModeStore } from '@Context/GlobalStore.ts';
 import { useEffect } from 'react';
 
-export default function DarkModeBTN() {
+const DarkModeBTN = () => {
     //DarkMode Store
     const isDark = useStore(DarkModeStore);
 
@@ -29,3 +29,5 @@ export default function DarkModeBTN() {
         <ToggleBTN funct={Toggle} initial={isDark} />
     )
 }
+
+export default DarkModeBTN;

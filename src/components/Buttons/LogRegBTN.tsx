@@ -1,4 +1,4 @@
-import { createUser, validateUser } from "@Utilities/firebaseCRUD";
+import { createUser, validateUser } from "@Utilities/logregService";
 import { generateSalt, hashPass, } from "@Utilities/Hashing";
 import { useEffect } from "react";
 import { toast } from "sonner";
@@ -24,7 +24,8 @@ export default function LogRegBTN({ mode }: LogRegBTNProps) {
         const isUser = await validateUser(Data[0].value, Data[1].value);
         if (Array.isArray(isUser) && isUser[0] === true) {  
             localStorage.setItem('F-User', JSON.stringify({ user: isUser[1].user, salt: isUser[1].salt}));
-            window.location.href = '/FirebaseCrud/';
+            
+            document.referrer ? window.location.href = document.referrer : window.location.href = '/Games/';
 
         } else if (isUser === 'Contraseña incorrecta') {
             toast.error('Contraseña incorrecta');
@@ -59,7 +60,7 @@ export default function LogRegBTN({ mode }: LogRegBTNProps) {
             localStorage.setItem('F-User', JSON.stringify({ user: Data[0].value, salt: salt }));
 
             //Redirect
-            window.location.href = '/FirebaseCrud/';
+            document.referrer ? window.location.href = document.referrer : window.location.href = '/Games/';
 
             return;
         } else if (isCreated === 'exists') {

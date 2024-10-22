@@ -66,7 +66,7 @@ const remove = (key: string) => {
 
 const updateNode = (path: string, { value, obj }: { value: any, obj: any }) => {
     const Nodes = normalizeNode(path);
-    
+
     if (Nodes.length === 1) {
         // Si solo hay un nodo, actualizamos el nodo principal directamente
         obj[Nodes[0]] = value;
@@ -112,8 +112,9 @@ const updateNode = (path: string, { value, obj }: { value: any, obj: any }) => {
 
 const updateNodes = (path: string, { value, obj }: { value: any[], obj: any }) => {
     const mainPath = path.split('/')[0];  // Extraemos el nodo padre
-    const childNodes = path.split('/').slice(1).join().split(',');  // Extraemos los nodos hijos
+    const childNodes = path.split('/').slice(1);  // Extraemos los nodos hijos
 
+    // Verifica que el número de valores coincida con el número de nodos
     if (childNodes.length !== value.length) {
         throw new Error("El número de valores no coincide con el número de nodos.");
     }
@@ -125,7 +126,23 @@ const updateNodes = (path: string, { value, obj }: { value: any[], obj: any }) =
     // Iteramos sobre los nodos hijos y les asignamos sus valores correspondientes
     for (let i = 0; i < childNodes.length; i++) {
         const key = childNodes[i].trim();
-        current[key] = value[i];
+        const isArrayIndex = !isNaN(Number(key)); // Verificamos si es un índice de array
+
+        // Asignamos el valor dependiendo de si es un índice o una clave de objeto
+        if (isArrayIndex) {
+            const index = Number(key);
+            // Aseguramos que current sea un array
+            if (!Array.isArray(current)) {
+                current = [];
+            }
+            // Aseguramos que el índice exista en el array
+            if (current.length <= index) {
+                current[index] = {}; // Crea un objeto vacío si el índice no existe
+            }
+            current[index] = value[i]; // Asignar el valor
+        } else {
+            current[key] = value[i]; // Asignar el valor directamente si es un objeto
+        }
     }
 
     updatedObj[mainPath] = current;  // Actualizamos el objeto principal
@@ -133,6 +150,19 @@ const updateNodes = (path: string, { value, obj }: { value: any[], obj: any }) =
     return updatedObj;  // Devolvemos la copia actualizada
 };
 
+
+const test = (path: string, { value, obj }: { value: any[], obj: any }) => {
+    const Nodes = normalizeNode(path);
+
+    if (Nodes.length === 1) {
+        // Si solo hay un nodo, actualizamos el nodo principal directamente
+        obj[Nodes[0]] = value;
+        return obj;
+    }
+    console.log(Nodes);
+    
+    
+}
 
 const normalizeNode = (node: string) => {
     if (node.endsWith('/')) {
@@ -149,5 +179,6 @@ export const Local = {
     get,
     remove,
     updateNode,
-    updateNodes
+    updateNodes,
+    test
 }

@@ -1,12 +1,12 @@
 ---
-import ShufeGame from "@Apps/ShufleGame/ShuffleGame";
+import WordleGame from "@Apps/WordleGame/WordleGame";
 import Header from "@Components/Header.astro";
 import Layout from "@Layouts/Layout.astro";
 import { Toaster } from "sonner";
 ---
 
-<Layout title="Template" description="Template">
+<Layout title="Wordle" description="Play Wordle every hour every day">
     <Toaster richColors position="top-center" client:only="react" />
-    <Header centerCont="Shuffle Game" />
-    <ShufeGame client:only="react" />
+    <Header centerCont="Wordle Game" />
+    <WordleGame client:only="react" />
 </Layout>

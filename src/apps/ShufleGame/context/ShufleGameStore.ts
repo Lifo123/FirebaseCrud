@@ -30,6 +30,8 @@ export const initialState = {
 
         ],
         status: 'inProgress',
+        currentLetter: 0,
+        currentTries: 0
     },
     gameSettings: {
         Length: 5,

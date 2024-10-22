@@ -20,7 +20,7 @@ export function useShuffleGame() {
         try {
             const salt = generateSalt();
             const wordGenerated = await queryDB.getWord(GS.gameSettings.Language, GS.gameSettings.Length);
-            const shuffleData = GameUtil.shuffle(wordGenerated, salt)
+            const shuffleData = GameUtil.shuffle(wordGenerated, salt)   
             let updatedGame = Local.updateNodes('gameState/word,salt', {
                 value: [shuffleData.shuffle, salt],
                 obj: GS
