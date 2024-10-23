@@ -1,36 +1,78 @@
 import { Local } from "@Utilities/Local";
 import { Setting } from "./ShuffleSettings";
+import { validWordStore } from "../context/ShufleGameStore";
 
-const shuffle = (word: string, salt: string) => {
-    const a = word.length + salt.length;
+const shuffle = (word: string) => {
+    const salt = generateRandom(50)
+    const wordArray = word.split('');
+    const swaps = [];
 
-    const saltValue = Array.from(salt).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    for (let i = 0; i < wordArray.length - 1; i++) {
+        const j = (i + salt) % wordArray.length;
 
-    let b = word.split('').sort((a: string, b: string) => a.localeCompare(b));
+        swaps.push([i, j]);
 
-    // Crear dos mitades a partir del array de caracteres
-    let c = b.slice(0, Math.floor(b.length / 2));
-    let d = b.slice(Math.floor(b.length / 2));
-
-    for (let i = 0; i < a; i++) {
-        const cIndex = i % c.length;
-        const dIndex = (i + saltValue) % d.length;
-
-        [c[cIndex], d[dIndex]] = [d[dIndex], c[cIndex]];
+        [wordArray[i], wordArray[j]] = [wordArray[j], wordArray[i]];
     }
 
-    const shuffledArray = [...c, ...d];
+    return {
+        word: word,
+        swaps: swaps,
+        shuffled: wordArray.join('')
+    };
+};
 
-    return { word: word, shuffle: shuffledArray.join('') };
-}
+const unshuffle = (shuffledWord: string, swaps: [number, number][]) => {
+    const wordArray = shuffledWord.split('');
+
+    for (let i = swaps.length - 1; i >= 0; i--) {
+        const [a, b] = swaps[i];
+        [wordArray[a], wordArray[b]] = [wordArray[b], wordArray[a]];
+    }
+
+    return {
+        word: wordArray.join(''),
+        arr: wordArray
+    };
+};
 
 const generateRandom = (max: number) => {
     return Math.floor(Math.random() * ((max || 100) + 1));
 }
 
-export const GameUtil = {
-    shuffle,
-    generateRandom
+const verifyWord = async (word: string) => {
+    const data: any = validWordStore.get();
+
+    return true
+
+    for (let i = 0; i < data.valid.length; i++) {
+        if (data.valid[i].includes(word)) {
+            console.log('Valid', word, 'su Key es ', i);
+            break;
+        }
+    }
+
+    console.log('Palabra no existe');
+
+
+
 }
 
-export { Local, Setting }
+const comparingWord = (wordShuffled: string, swaps: [number, number][], guess: string) => {
+    const originalWord = unshuffle(wordShuffled, swaps);
+
+    if (originalWord.word === guess) {
+        return true;
+    }
+
+
+}
+
+const GameUtil = {
+    shuffle,
+    generateRandom,
+    verifyWord,
+    comparingWord
+}
+
+export { Local, Setting, GameUtil }

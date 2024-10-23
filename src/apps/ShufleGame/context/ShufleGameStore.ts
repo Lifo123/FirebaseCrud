@@ -26,17 +26,39 @@ export const initialState = {
                 { char: '', isValid: null },
                 { char: '', isValid: null },
                 { char: '', isValid: null }
+            ],
+            [
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null }
+            ],
+            [
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null }
+            ],
+            [
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null },
+                { char: '', isValid: null }
             ]
 
         ],
         status: 'inProgress',
         currentLetter: 0,
-        currentTries: 0
+        currentRow: 0
     },
     gameSettings: {
         Length: 5,
-        Tries: 3,
+        Tries: 6,
         Language: 'ES',
+        dicName: null
     }
 
 }
@@ -47,6 +69,9 @@ export const initialStateStadistic = {
     fails: 0
 }
 
+
 //ShufleGame Store
 export const ShufleGameStore = atom(isBrowser ? JSON.parse(localStorage.getItem('F-Shuffle') || JSON.stringify(initialState)) : initialState)
 export const ShuffleStadisticStore = atom(isBrowser ? JSON.parse(localStorage.getItem('F-ShuffleStadistic') || JSON.stringify(initialStateStadistic)) : initialStateStadistic)
+
+export const validWordStore = atom({ valid: null, custom: null })

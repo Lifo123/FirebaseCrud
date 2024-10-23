@@ -1,4 +1,4 @@
-import './css/Shuffle.css'
+import './Shuffle.css'
 import { useStore } from "@nanostores/react";
 import { useShuffleGame } from './hooks/useShuffleGame';
 import { ShufleGameStore } from "./context/ShufleGameStore";
@@ -27,7 +27,7 @@ export default function ShuffleGame() {
                         <div className='game-header f-row g-2 mx-auto'>
                             {
                                 GS.gameState.word.split('').map((char: string, index: number) => (
-                                    <span className='box-in br-6 f-center fs-6 fw-900' key={index}>{char}</span>
+                                    <span className='box-letter br-6 f-center fs-6 fw-900' key={index}>{char}</span>
                                 ))
                             }
                         </div>
@@ -59,8 +59,10 @@ const Row = ({ data, id }: RowProps) => {
     return (
         <div className='game-row f-row g-2' data-row={id}>
             {
-                data?.map((char: any, index: number) => (
-                    <span className='box-in br-6 f-center fs-6 fw-900' key={index} data-char={index}>{char.char}</span>
+                data?.map((box: any, index: number) => (
+                    <span className={`box-letter br-6 f-center fs-6 fw-900 ${box.char ? 'active' : ''}`} key={index} data-box={index}>
+                        {box.char}
+                    </span>
                 ))
             }
         </div>

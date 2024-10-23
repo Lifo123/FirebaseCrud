@@ -6,7 +6,7 @@ import { Toaster } from "sonner";
 ---
 
 <Layout title="Template" description="Template">
-    <Toaster richColors position="top-center" client:only="react" />
+    <Toaster position="top-center" client:only="react" richColors visibleToasts={1}/>
     <Header centerCont="Shuffle Game" />
     <ShufeGame client:only="react" />
 </Layout>

@@ -1,6 +1,7 @@
 import { DicDB } from "@Services/fireDictionary";
 import { get, ref, set } from "firebase/database";
 import { GameUtil } from "../utilities/ShuffleUtilities";
+import { validWordStore } from "../context/ShufleGameStore";
 
 
 const getWord = async (lang: string, length: number) => {
@@ -19,8 +20,9 @@ const getWord = async (lang: string, length: number) => {
     }
 }
 
-const validateWord = async (lang: string, word: string) => {
-
+const getValidWords = async (lang: string, length: number, dicName?: string) => {
+    return
+    
 }
 
 const setCustomDictionary = async (lang: string, dicName: string, obj: any) => {
@@ -42,7 +44,7 @@ const setCustomDictionary = async (lang: string, dicName: string, obj: any) => {
 
 export const queryDB = {
     getWord,
-    validateWord,
+    getValidWords,
     setCustomDictionary
 }
 

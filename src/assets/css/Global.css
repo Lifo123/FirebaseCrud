@@ -1,13 +1,81 @@
-:root{
+:root {}
 
+.DarkMode {}
+
+.box-letter {
+    border-radius: 4px;
+    border: solid 2px #cdcdcd;
+    height: 60px;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    transform-style: preserve-3d;
+    font-family: Miriam Libre;
 }
 
-.DarkMode {
-    
+.box-letter.active {
+    border: solid 2px #acacac;
+    animation: BoxWithLetter .15s ease;
 }
 
-.count {
-    padding: 13px 26px;
-    border: solid 1px #000;
+.box-letter[eval="correct"] {
+    border: solid 2px #acacac28;
+    background-color: var(--f-text-green);
+}
 
+.box-letter[eval="incorrect"] {
+    border: solid 2px #acacac28;
+    background-color: #69696971;
+}
+
+.box-letter[eval="exist"] {
+    border: solid 2px #acacac28;
+    background-color: var(--f-text-yellow);
+}
+
+.box-letter.v {
+    animation: ValidationAnimation .7s ease;
+}
+
+.box-letter[win="true"] {
+    animation: WinAnimation .45s ease;
+}
+
+@keyframes ValidationAnimation {
+    50% {
+        transform: rotateX(90deg);
+    }
+}
+
+
+@keyframes BoxWithLetter {
+    25% {
+        transform: scale(1.13);
+    }
+
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+@keyframes WinAnimation {
+    50% {
+        transform: translateY(-20px);
+    }
+
+    80% {
+        transform: translateY(4px);
+    }
+}
+
+@keyframes ErrorrRowAnimation {
+    30% {
+        transform: translateX(30px);
+    }
+
+    70% {
+        transform: translateX(-30px);
+    }
 }
