@@ -19,29 +19,34 @@
     border: solid 2px #acacac;
     animation: BoxWithLetter .15s ease;
 }
+.box-letter.validate{
+    animation: ValidationAnimation .7s ease;
+}
+.box-letter.load{
+    animation: LoadingAnimation .7s ease;
+}
 
-.box-letter[eval="correct"] {
+.box-letter[data-valid="true"] {
     border: solid 2px #acacac28;
     background-color: var(--f-text-green);
+    animation: ValidationAnimation .7s ease;
 }
 
-.box-letter[eval="incorrect"] {
+.box-letter[data-valid="false"] {
     border: solid 2px #acacac28;
     background-color: #69696971;
+    animation: ValidationAnimation .7s ease;
 }
-
-.box-letter[eval="exist"] {
+.box-letter[data-valid="none"] {
     border: solid 2px #acacac28;
-    background-color: var(--f-text-yellow);
-}
-
-.box-letter.v {
+    background-color: #69696971;
     animation: ValidationAnimation .7s ease;
 }
 
 .box-letter[win="true"] {
     animation: WinAnimation .45s ease;
 }
+
 
 @keyframes ValidationAnimation {
     50% {
@@ -77,5 +82,11 @@
 
     70% {
         transform: translateX(-30px);
+    }
+}
+
+@keyframes LoadingAnimation {
+    50% {
+        transform: translateY(-10px);
     }
 }

@@ -5,7 +5,14 @@ const isBrowser = typeof window !== 'undefined'
 export const initialState = {
     gameState: {
         word: '',
-        salt: '',
+        wordArr: [
+            '',
+            '',
+            '',
+            '',
+            ''
+        ],
+        swaps: [],
         guess: '',
         valid: [
             [
@@ -40,23 +47,17 @@ export const initialState = {
                 { char: '', isValid: null },
                 { char: '', isValid: null },
                 { char: '', isValid: null }
-            ],
-            [
-                { char: '', isValid: null },
-                { char: '', isValid: null },
-                { char: '', isValid: null },
-                { char: '', isValid: null },
-                { char: '', isValid: null }
             ]
 
         ],
-        status: 'inProgress',
+        isWin: false,
+        isRestarting: true,
         currentLetter: 0,
         currentRow: 0
     },
     gameSettings: {
         Length: 5,
-        Tries: 6,
+        Tries: 5,
         Language: 'ES',
         dicName: null
     }

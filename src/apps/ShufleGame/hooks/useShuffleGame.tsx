@@ -1,5 +1,5 @@
 //React
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useStore } from "@nanostores/react";
 
 import { initialState, ShufleGameStore, validWordStore } from "../context/ShufleGameStore";
@@ -8,26 +8,20 @@ import { initialState, ShufleGameStore, validWordStore } from "../context/Shufle
 import { queryDB } from "../services/ShuffleServices";
 
 //Utils
-import { generateSalt } from "@Utilities/Hashing";
 import { control } from "../utilities/ShuffleControl";
 import { GameUtil, Local, Setting } from "../utilities/ShuffleUtilities";
 import { node } from "lifo-utils";
 
 export function useShuffleGame() {
-    //States
-    const [loading, setLoading] = useState(false);
-    const [isMounted, setIsMounted] = useState(false);
-
     //Store
     const GS = useStore(ShufleGameStore);
 
     const getWord = async () => {
-        setLoading(true);
         try {
             const wordGenerated = await queryDB.getWord(GS.gameSettings.Language, GS.gameSettings.Length);
             const shuffleData = GameUtil.shuffle(wordGenerated)
-            let updateData = node.set('gameState/word,swaps', {
-                value: [shuffleData.shuffled, shuffleData.swaps],
+            let updateData = node.set('gameState/word,wordArr,swaps', {
+                value: [shuffleData.shuffled, shuffleData.shuffled.split(''), shuffleData.swaps],
                 data: GS
             })
 
@@ -38,13 +32,12 @@ export function useShuffleGame() {
         } catch (e) {
             console.log(e);
             return false
-        } finally {
-            setLoading(false);
         }
     }
 
     const restartGame = () => {
-        getWord();
+        Local.set('F-Shuffle', initialState);
+        window.location.reload();
     }
 
     const restartSettings = () => {
@@ -68,28 +61,27 @@ export function useShuffleGame() {
 
     //Effects
     useEffect(() => {
-        setIsMounted(true);
-        if (!isMounted) {
-            queryDB.getValidWords(GS.gameSettings.Language, GS.gameSettings.Length)
+        if (GS?.gameState?.isWin) {
+            window?.removeEventListener('keydown', handleKeyDown);
+        } else {
+            window?.addEventListener('keydown', handleKeyDown);
         }
-
-        window?.addEventListener('keydown', handleKeyDown)
 
         return () => {
             window?.removeEventListener('keydown', handleKeyDown)
         }
-    }, [])
+    }, [GS?.gameState?.isWin])
 
     useEffect(() => {
-        if (!GS?.gameState?.word || !GS?.gameState?.salt) {
+        if (GS?.gameState?.isRestarting) {
             getWord();
+            GS.gameState.isRestarting = false;
         }
-    }, [GS?.gameState?.word, GS?.gameState?.salt]);
+    }, [GS?.gameState?.isRestarting]);
 
     return {
         getWord,
         restartGame,
-        restartSettings,
-        loading
+        restartSettings
     }
 }

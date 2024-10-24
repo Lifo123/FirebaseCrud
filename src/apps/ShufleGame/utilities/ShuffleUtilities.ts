@@ -60,11 +60,17 @@ const verifyWord = async (word: string) => {
 
 const comparingWord = (wordShuffled: string, swaps: [number, number][], guess: string) => {
     const originalWord = unshuffle(wordShuffled, swaps);
+    
+    let result = []
 
-    if (originalWord.word === guess) {
-        return true;
+    for(let i = 0; i < originalWord.arr.length; i++){
+        result.push(originalWord.arr[i] === guess[i]);
     }
 
+    return {
+        result: result,
+        isWin: result.every(Boolean)
+    };
 
 }
 

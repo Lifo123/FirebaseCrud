@@ -60,6 +60,7 @@ const enter = () => {
     }
 
     const curRow = game.currentRow
+
     const guess = game.valid[curRow].map((box: any) => box.char).join('')
 
     const isValidWord: any = GameUtil.verifyWord(guess);
@@ -69,16 +70,23 @@ const enter = () => {
         return
     }
 
-    const isValidVerify = GameUtil.comparingWord(game.word, game.swaps, guess);
+    const validVerify: any = GameUtil.comparingWord(game.word, game.swaps, guess);
+    
+    for (let i = 0; i < validVerify.result.length; i++) {
+        game.valid[curRow][i].isValid = validVerify.result[i]
+    }
+    game.currentRow = curRow + 1;
+    game.currentLetter = 0;
+    game.isWin = validVerify.isWin;
+    game.guess = guess;
 
-
-    return
-
-    let updatedData = node.set(`gameState/currentRow,currentLetter,guess`, {
-        value: [curRow + 1, 0, guess],
+    let updatedData = node.set(`gameState`, {
+        value: game,
         data: data,
     });
 
+    ShufleGameStore.set(updatedData);
+    Local.set('F-Shuffle', updatedData);
 
 
 }
